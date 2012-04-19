@@ -4,8 +4,9 @@
 #include <fstream>
 #include <string>
 #include <map>
-#include <GL/gl.h>
-#include "util/string.cpp"
+#include <GL/glew.h>
+#include "../util/string.h"
+#include "../gl/ShaderProgram.h"
 
 namespace manager {
 

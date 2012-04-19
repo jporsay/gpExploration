@@ -17,7 +17,8 @@ Shader* Shader::inst() {
 }
 
 void Shader::setPath(std::string path) {
-	if ("/" != path[path.size() - 1]) {
+	const char lastChar = path.at(path.size() - 1);
+	if (lastChar != '/') {
 		path += "/";
 	}
 	this->path = path;
@@ -38,8 +39,8 @@ bool Shader::loadShaders() {
 
 bool Shader::loadShader(std::string shader) {
 	std::string vert, frag;
-	vert = util::readFile(shader + "." + this->vertexExtension);
-	frag = util::readFile(shader + "." + this->fragmentExtension);
+	vert = utilities::readFile(shader + "." + this->vertexExtension);
+	frag = utilities::readFile(shader + "." + this->fragmentExtension);
 	// compile shaders and add them to map
 	return true;
 }
