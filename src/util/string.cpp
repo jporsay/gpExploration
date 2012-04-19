@@ -1,8 +1,6 @@
-#include <string>
-#include <fstream>
-#include <streambuf>
+#include "string.h"
 
-namespace util {
+namespace utilities {
 
 std::string readFile(std::string fileName) {
 	std::ifstream t(fileName.c_str());
