@@ -1,7 +1,7 @@
 #include <SDL/SDL.h>
 #include <GL/glew.h>
 #include <iostream>
-
+#include "util/Logger.h"
 SDL_Surface* screen;
 bool running = true;
 
@@ -23,6 +23,7 @@ bool initEverything() {
 	if (!initSDL()) {
 		return false;
 	}
+	Logger::inst()->setFileName("log.txt");
 	GLenum glew_init;
 	glew_init = glewInit();
 	if (glew_init != GLEW_OK) {
