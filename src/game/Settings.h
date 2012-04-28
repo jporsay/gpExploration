@@ -8,7 +8,7 @@ namespace game {
 class Settings {
 private:
 	Settings();
-	Settings* instance;
+	static Settings* instance;
 
 	std::string resources;
 	std::string shaders;
