@@ -7,6 +7,9 @@
 #include "game/State.h"
 #include "game/Settings.h"
 
+#include "parser/ThreeDS.h"
+#include "object/Object.h"
+
 SDL_Surface* screen;
 event::Manager* eventManager;
 bool running = true;
@@ -73,6 +76,9 @@ int main(int argc, char* argv[]) {
 	if (!initEverything()) {
 		return 1;
 	}
+	parser::ThreeDS* parser = new parser::ThreeDS();
+	parser->setFile("Box.3DS");
+	object::Object* o = parser->parse();
 	run();
 	clean();
 	return 0;
