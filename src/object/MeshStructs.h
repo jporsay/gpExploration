@@ -13,4 +13,9 @@ typedef struct {
 	float c;
 } face;
 
+typedef struct {
+	float u;
+	float v;
+} mapCoord;
+
 #endif
