@@ -30,4 +30,9 @@ public:
     void logWarning(string text);
     void logInfo(string text);
 };
+
+#define LOG_INFO(info) Logger::inst()->logInfo(info)
+#define LOG_WARNING(info) Logger::inst()->logWarning(info)
+#define LOG_ERROR(info) Logger::inst()->logError(info)
+
 #endif
