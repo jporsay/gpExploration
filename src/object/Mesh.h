@@ -10,12 +10,16 @@ class Mesh {
 private:
 	std::vector<vertex> vertexes;
 	std::vector<face> faces;
+	std::vector<mapCoord> mapCoords;
 public:
 	Mesh();
 	void addVertex(float x, float y, float z);
-	std::vector<vertex> getVertexes();
 	void addFace(float a, float b, float c);
+	void addMapCoord(float u, float v);
+	std::vector<vertex> getVertexes();
 	std::vector<face> getFaces();
+	std::vector<mapCoord> getMapCoords();
+
 	virtual ~Mesh();
 };
 

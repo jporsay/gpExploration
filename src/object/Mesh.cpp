@@ -25,6 +25,15 @@ std::vector<face> Mesh::getFaces() {
 	return this->faces;
 }
 
+void Mesh::addMapCoord(float u, float v) {
+	mapCoord mc = { u, v };
+	this->mapCoords.push_back(mc);
+}
+
+std::vector<mapCoord> Mesh::getMapCoords() {
+	return this->mapCoords;
+}
+
 Mesh::~Mesh() {
 	// TODO Auto-generated destructor stub
 }
