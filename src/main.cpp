@@ -2,7 +2,13 @@
 #include <GL/glew.h>
 #include <iostream>
 #include "util/Logger.h"
+#include "event/Manager.h"
+#include "event/GenericHandler.h"
+#include "game/State.h"
+#include "game/Settings.h"
+
 SDL_Surface* screen;
+event::Manager* eventManager;
 bool running = true;
 
 bool initSDL() {
@@ -23,7 +29,7 @@ bool initEverything() {
 	if (!initSDL()) {
 		return false;
 	}
-	Logger::inst()->setFileName("log.txt");
+
 	GLenum glew_init;
 	glew_init = glewInit();
 	if (glew_init != GLEW_OK) {
@@ -34,21 +40,28 @@ bool initEverything() {
 		std::cout << "OpenGL 2.1 not supported" << std::endl;
 		return false;
 	}
+	game::Settings::inst()->setResourcePath("resources/");
+	game::Settings::inst()->setShaderPath("resources/shaders/");
+	game::Settings::inst()->setModelPath("resources/models/");
+	Logger::inst()->setFileName("log.txt");
+	eventManager = new event::Manager();
+	eventManager->registerHandler(new handler::GenericHandler());
 	return true;
 }
 
 void render() {
-	SDL_Event e;
-	while (running) {
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
+	SDL_GL_SwapBuffers();
+}
 
-		while (SDL_PollEvent(&e)) {
-			if (e.type == SDL_QUIT) {
-				running = false;
-			}
+void run() {
+	game::State::inst()->setRunning(true);
+	while (game::State::inst()->isRunning()) {
+		if (!game::State::inst()->isHidden()) {
+			eventManager->handleEvents();
+			render();
 		}
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
-		SDL_GL_SwapBuffers();
 	}
 }
 
@@ -60,7 +73,7 @@ int main(int argc, char* argv[]) {
 	if (!initEverything()) {
 		return 1;
 	}
-	render();
+	run();
 	clean();
 	return 0;
 }
