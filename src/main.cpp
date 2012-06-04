@@ -6,14 +6,21 @@
 #include "event/GenericHandler.h"
 #include "app/State.h"
 #include "app/Settings.h"
+#include "app/GraphicSettings.h"
 #include "manager/Shader.h"
+#include "manager/CameraManager.h"
 #include "gl/util/Helper.h"
+#include "glm/glm.hpp"
+#include "glm/gtc/type_ptr.hpp"
 
 #include "parser/ThreeDS.h"
 #include "model/Model.h"
+#include "world/Camera.h"
 
 SDL_Surface* screen;
 event::Manager* eventManager;
+manager::Camera* cameraManager;
+glm::mat4 vp;
 bool running = true;
 
 model::Model* o;
@@ -23,7 +30,7 @@ bool initSDL() {
 		std::cout << "Couldn't initialize SDL" << std::endl;
 		return false;
 	}
-	screen = SDL_SetVideoMode(800, 600, 32, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_OPENGL);
+	screen = SDL_SetVideoMode(app::GraphicSettings::screenWidth, app::GraphicSettings::screenHeight, 32, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_OPENGL);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER,1);
 	if (screen == NULL) {
 		std::cout << "Error creating OpenGL Surface." << std::endl;
@@ -54,6 +61,8 @@ bool initOpenGL() {
 }
 
 bool initEverything() {
+	app::GraphicSettings::screenHeight = 600;
+	app::GraphicSettings::screenWidth = 800;
 	if (!initSDL() || !initGlew() || !initOpenGL()) {
 		return false;
 	}
@@ -61,8 +70,10 @@ bool initEverything() {
 	app::Settings::inst()->setShaderPath("resources/shaders/");
 	app::Settings::inst()->setModelPath("resources/models/");
 	Logger::inst()->setFileName("log.txt");
-	eventManager = new event::EventManager();
+	eventManager = new event::Manager();
 	eventManager->registerHandler(new handler::GenericHandler());
+	cameraManager = manager::Camera::inst();
+	cameraManager->add(new world::Camera(), "world");
 	return true;
 }
 
@@ -80,6 +91,10 @@ bool loadEverything() {
 	}
 	gl::ShaderProgram* simpleShader = manager::Shader::inst()->getProgram("simple");
 	simpleShader->bindAttribLocation("vert", gl::util::GL_ATTRIB_VERTEX);
+	GLuint uVp = glGetUniformLocation(simpleShader->get(), "vp");
+	glUseProgram(simpleShader->get());
+	vp = cameraManager->get("world")->toScreen() * cameraManager->get("world")->worldToCamera();
+	glUniformMatrix4fv(uVp, 1, GL_FALSE, glm::value_ptr(vp));
 	simpleShader->link();
 	return true;
 }
