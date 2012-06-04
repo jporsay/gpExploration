@@ -18,6 +18,13 @@ inline std::string toString(const T& t) {
 	return ss.str();
 }
 
+template <class T>
+inline std::string toHexString(const T& t) {
+	std::stringstream ss;
+	ss << std::hex << t;
+	return ss.str();
+}
+
 
 }
 
