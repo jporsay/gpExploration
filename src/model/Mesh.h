@@ -13,6 +13,7 @@ private:
 	std::vector<face> faces;
 	std::vector<mapCoord> mapCoords;
 	GLuint
+		vao, // Vertex Array Object
 		vbo, // Vertex buffer object
 		ibo, // Index buffer object
 		nbo; // Normal buffer object
