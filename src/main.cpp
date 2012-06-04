@@ -4,8 +4,8 @@
 #include "util/Logger.h"
 #include "event/Manager.h"
 #include "event/GenericHandler.h"
-#include "game/State.h"
-#include "game/Settings.h"
+#include "app/State.h"
+#include "app/Settings.h"
 
 #include "parser/ThreeDS.h"
 #include "object/Object.h"
