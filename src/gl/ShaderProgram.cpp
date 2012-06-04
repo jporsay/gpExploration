@@ -3,21 +3,25 @@
 namespace gl {
 
 ShaderProgram::ShaderProgram() {
-
+	this->program = glCreateProgram();
 }
 
-void ShaderProgram::addFragmentShader(string shader) {
+bool ShaderProgram::addFragmentShader(string shader) {
 	GLuint resource = util::Shader::create(GL_FRAGMENT_SHADER, shader);
 	if (resource != 0) {
 		this->fragmentShader.push_back(resource);
+		return true;
 	}
+	return false;
 }
 
-void ShaderProgram::addVertexShader(string shader) {
+bool ShaderProgram::addVertexShader(string shader) {
 	GLuint resource = util::Shader::create(GL_VERTEX_SHADER, shader);
 	if (resource != 0) {
 		this->vertexShader.push_back(resource);
+		return true;
 	}
+	return false;
 }
 
 //bool ShaderProgram::bindAttribute(string name) {
@@ -53,15 +57,29 @@ void ShaderProgram::bindAttribLocation(string name, GLuint location) {
 	glBindAttribLocation(this->program, location, name.c_str());
 }
 
-bool ShaderProgram::build() {
+bool ShaderProgram::compile() {
 	for (int i = 0; i < (int)this->vertexShader.size(); i++) {
 		glAttachShader(this->program, this->vertexShader.at(i));
 	}
 	for (int i = 0; i < (int)this->fragmentShader.size(); i++) {
 		glAttachShader(this->program, this->fragmentShader.at(i));
 	}
+	return true;
+}
 
-	return util::Shader::link(this->program);
+bool ShaderProgram::link() {
+	GLint linkOk;
+	glLinkProgram(this->program);
+	glGetProgramiv(this->program, GL_LINK_STATUS, &linkOk);
+	if (linkOk == GL_FALSE) {
+		gl::util::printShaderOrProgramLog(this->program);
+		return false;
+	}
+	return true;
+}
+
+GLuint ShaderProgram::get() {
+	return this->program;
 }
 
 ShaderProgram::~ShaderProgram() {

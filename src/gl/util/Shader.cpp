@@ -10,13 +10,12 @@ Shader::Shader() {
 
 
 GLuint Shader::create(GLenum type, std::string fileName) {
-	const GLchar* source = utilities::readFile(fileName).c_str();
-
+	std::string fileContents = utilities::readFile(fileName);
+	const GLchar* source = fileContents.c_str();
 	if (source == NULL) {
-		Logger::inst()->logError("Error reading shader: " + fileName);
+		LOG_ERROR("Error reading shader: " + fileName);
 		return 0;
 	}
-
 	GLuint resource = glCreateShader(type);
 	glShaderSource(resource, 1, &source, NULL);
 	glCompileShader(resource);
@@ -29,17 +28,6 @@ GLuint Shader::create(GLenum type, std::string fileName) {
 	}
 	return resource;
 
-}
-
-bool Shader::link(GLuint program) {
-	GLint linkOk;
-	glLinkProgram(program);
-	glGetProgramiv(program, GL_LINK_STATUS, &linkOk);
-	if (linkOk == GL_FALSE) {
-		printShaderOrProgramLog(program);
-		return false;
-	}
-	return true;
 }
 
 Shader::~Shader() {

@@ -31,7 +31,8 @@ public:
 //	GLint getAttribute(string name);
 	void bindAttribLocation(string name, GLuint location);
 	GLuint get();
-	bool build();
+	bool link();
+	bool compile();
 };
 
 }
