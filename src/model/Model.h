@@ -5,9 +5,9 @@
 #include <vector>
 #include <string>
 
-namespace object {
+namespace model {
 
-class Object {
+class Model {
 private:
 	std::vector<Mesh*> meshes;
 	std::string name;
@@ -15,8 +15,10 @@ public:
 	void setName(std::string name);
 	std::string getName();
 	void addMesh(Mesh*);
-	Object();
-	virtual ~Object();
+	void upload();
+	void draw();
+	Model();
+	virtual ~Model();
 };
 
 }

@@ -1,6 +1,8 @@
 #ifndef MESHSTRUCTS_H_
 #define MESHSTRUCTS_H_
 
+#include <GL/glew.h>
+
 typedef struct {
 	float x;
 	float y;
@@ -8,9 +10,9 @@ typedef struct {
 } vertex;
 
 typedef struct {
-	float a;
-	float b;
-	float c;
+	GLuint a;
+	GLuint b;
+	GLuint c;
 } face;
 
 typedef struct {
