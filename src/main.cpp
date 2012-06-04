@@ -8,7 +8,7 @@
 #include "app/Settings.h"
 
 #include "parser/ThreeDS.h"
-#include "object/Object.h"
+#include "model/Model.h"
 
 SDL_Surface* screen;
 event::Manager* eventManager;
