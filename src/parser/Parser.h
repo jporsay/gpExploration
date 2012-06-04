@@ -2,7 +2,7 @@
 #define PARSER_H_
 
 #include <string>
-#include "../object/Object.h"
+#include "../model/Model.h"
 namespace parser {
 
 class Parser {
@@ -10,7 +10,7 @@ protected:
 	Parser();
 	std::string file;
 public:
-	virtual object::Object* parse() = 0;
+	virtual model::Model* parse() = 0;
 	virtual void setFile(std::string file);
 	virtual ~Parser();
 };

@@ -1,5 +1,5 @@
 #include "Parser.h"
-#include "../game/Settings.h"
+#include "../app/Settings.h"
 
 namespace parser {
 
@@ -9,7 +9,7 @@ Parser::Parser() {
 }
 
 void Parser::setFile(std::string file) {
-	this->file = game::Settings::inst()->getModelPath() + file;
+	this->file = app::Settings::inst()->getModelPath() + file;
 }
 
 Parser::~Parser() {

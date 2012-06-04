@@ -7,12 +7,11 @@ ThreeDS::ThreeDS() {
 
 }
 
-object::Object* ThreeDS::parse() {
-	LOG_INFO("Starting to parse!");
+model::Model* ThreeDS::parse() {
 	unsigned short chunkId;
 	unsigned int chunkLength;
-	object::Object* obj = 0;
-	object::Mesh* mesh = 0;
+	model::Model* obj = 0;
+	model::Mesh* mesh = 0;
 	std::ifstream file (this->file.c_str(), std::ios::in | std::ios::binary);
 
 	while (file.good()) {
@@ -20,18 +19,15 @@ object::Object* ThreeDS::parse() {
 		file.read((char*)&chunkLength, sizeof(unsigned int));
 		switch (chunkId) {
 		case MAIN3DS:
-			LOG_INFO("Found MAIN");
 			break;
 		case EDITOR3DS:
-			LOG_INFO("Found EDITOR");
 			break;
 		case EDIT_OBJECT:
-			LOG_INFO("Found Object");
-			obj = new object::Object();
+			obj = new model::Model();
 			this->readName(&file, obj);
 			break;
 		case OBJECT_TRIMESH:
-			mesh = new object::Mesh();
+			mesh = new model::Mesh();
 			obj->addMesh(mesh);
 			break;
 		case TRI_VERTEXL:
@@ -44,8 +40,6 @@ object::Object* ThreeDS::parse() {
 			this->readMappingCoordinates(&file, mesh);
 			break;
 		default:
-			LOG_INFO("Unsupported chunk! " + utilities::toString(chunkId));
-			LOG_INFO("Skipping " + utilities::toString(chunkLength - 6) + " bytes");
 			file.seekg(chunkLength - 6, std::ios_base::cur);
 			break;
 		}
@@ -58,7 +52,7 @@ ThreeDS::~ThreeDS() {
 	// TODO Auto-generated destructor stub
 }
 
-void ThreeDS::readName(std::ifstream* stream, object::Object* obj) {
+void ThreeDS::readName(std::ifstream* stream, model::Model* obj) {
 	char name[MAX_NAME_LENGTH];
 	char* curChar = name;
 	int i = 0;
@@ -67,14 +61,12 @@ void ThreeDS::readName(std::ifstream* stream, object::Object* obj) {
 		i++;
 	} while (*(curChar++) != '\0' && i < MAX_NAME_LENGTH);
 	obj->setName(std::string(name));
-	Logger::inst()->logInfo("Found object: " + obj->getName());
 	return;
 }
 
-void ThreeDS::readVertexes(std::ifstream* stream, object::Mesh* mesh) {
+void ThreeDS::readVertexes(std::ifstream* stream, model::Mesh* mesh) {
 	unsigned short amount;
-	stream->read((char*)&amount, sizeof(unsigned char));
-	Logger::inst()->logInfo("Read " + utilities::toString(amount) + " vertexes.");
+	stream->read((char*)&amount, sizeof(unsigned short));
 	float vertex[3];
 	for (int i = 0; i < amount; i++) {
 		stream->read((char*)vertex, sizeof(float) * 3);
@@ -83,11 +75,10 @@ void ThreeDS::readVertexes(std::ifstream* stream, object::Mesh* mesh) {
 	return;
 }
 
-void ThreeDS::readFaces(std::ifstream* stream, object::Mesh* mesh) {
+void ThreeDS::readFaces(std::ifstream* stream, model::Mesh* mesh) {
 	unsigned short amount;
 	unsigned short face_flags; // Unused but necessarily parsed
-	stream->read((char*)&amount, sizeof(unsigned char));
-	Logger::inst()->logInfo("Read " + utilities::toString(amount) + " faces.");
+	stream->read((char*)&amount, sizeof(unsigned short));
 	unsigned short face[3];
 	for (int i = 0; i < amount; i++) {
 		stream->read((char*)face, sizeof(unsigned short) * 3);
@@ -97,9 +88,9 @@ void ThreeDS::readFaces(std::ifstream* stream, object::Mesh* mesh) {
 	return;
 }
 
-void ThreeDS::readMappingCoordinates(std::ifstream* stream, object::Mesh* mesh) {
+void ThreeDS::readMappingCoordinates(std::ifstream* stream, model::Mesh* mesh) {
 	unsigned short amount;
-	stream->read((char*)&amount, sizeof(unsigned char));
+	stream->read((char*)&amount, sizeof(unsigned short));
 	float mapCoordinate[2];
 	stream->read((char*)mapCoordinate, sizeof(float) * 2);
 	mesh->addMapCoord(mapCoordinate[0], mapCoordinate[1]);

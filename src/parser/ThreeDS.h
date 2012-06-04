@@ -5,8 +5,8 @@
 #include <ios>
 
 #include "Parser.h"
-#include "../object/Object.h"
-#include "../object/Mesh.h"
+#include "../model/Model.h"
+#include "../model/Mesh.h"
 #include "../util/Logger.h"
 #include "../util/string.h"
 
@@ -26,13 +26,13 @@ namespace parser {
 
 class ThreeDS: public parser::Parser {
 private:
-	void readName(std::ifstream* stream, object::Object* obj);
-	void readVertexes(std::ifstream* stream, object::Mesh* mesh);
-	void readFaces(std::ifstream* stream, object::Mesh* mesh);
-	void readMappingCoordinates(std::ifstream* stream, object::Mesh* mesh);
+	void readName(std::ifstream* stream, model::Model* obj);
+	void readVertexes(std::ifstream* stream, model::Mesh* mesh);
+	void readFaces(std::ifstream* stream, model::Mesh* mesh);
+	void readMappingCoordinates(std::ifstream* stream, model::Mesh* mesh);
 public:
 	ThreeDS();
-	object::Object* parse();
+	model::Model* parse();
 	virtual ~ThreeDS();
 };
 
