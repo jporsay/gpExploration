@@ -23,12 +23,13 @@ private:
 public:
 	ShaderProgram();
 	virtual ~ShaderProgram();
-	void addVertexShader(string shader);
-	void addFragmentShader(string shader);
-	bool bindUniform(string name);
-	GLint getUniform(string name);
-	bool bindAttribute(string name);
-	GLint getAttribute(string name);
+	bool addVertexShader(string shader);
+	bool addFragmentShader(string shader);
+//	bool bindUniform(string name);
+//	GLint getUniform(string name);
+//	bool bindAttribute(string name);
+//	GLint getAttribute(string name);
+	void bindAttribLocation(string name, GLuint location);
 	GLuint get();
 	bool build();
 };

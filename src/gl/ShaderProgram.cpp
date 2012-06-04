@@ -20,33 +20,37 @@ void ShaderProgram::addVertexShader(string shader) {
 	}
 }
 
-bool ShaderProgram::bindAttribute(string name) {
-	GLint resource;
-	resource = glGetAttribLocation(this->program, name.c_str());
-	if (resource == -1) {
-		Logger::inst()->logError("Error binding attribute" + name);
-		return false;
-	}
-	this->attribute.insert(pair<string, GLint>(name, resource));
-	return true;
-}
+//bool ShaderProgram::bindAttribute(string name) {
+//	GLint resource;
+//	resource = glGetAttribLocation(this->program, name.c_str());
+//	if (resource == -1) {
+//		Logger::inst()->logError("Error binding attribute" + name);
+//		return false;
+//	}
+//	this->attribute.insert(pair<string, GLint>(name, resource));
+//	return true;
+//}
+//
+//GLint ShaderProgram::getAttribute(string name) {
+//	return this->attribute.at(name);
+//}
+//
+//bool ShaderProgram::bindUniform(string name) {
+//	GLint resource;
+//	resource = glGetUniformLocation(this->program, name.c_str());
+//	if (resource == -1) {
+//		Logger::inst()->logError("Error binding uniform" + name);
+//	}
+//	this->uniform.insert(pair<string, GLint>(name, resource));
+//	return true;
+//}
+//
+//GLint ShaderProgram::getUniform(string name) {
+//	return this->uniform.at(name);
+//}
 
-GLint ShaderProgram::getAttribute(string name) {
-	return this->attribute.at(name);
-}
-
-bool ShaderProgram::bindUniform(string name) {
-	GLint resource;
-	resource = glGetUniformLocation(this->program, name.c_str());
-	if (resource == -1) {
-		Logger::inst()->logError("Error binding uniform" + name);
-	}
-	this->uniform.insert(pair<string, GLint>(name, resource));
-	return true;
-}
-
-GLint ShaderProgram::getUniform(string name) {
-	return this->uniform.at(name);
+void ShaderProgram::bindAttribLocation(string name, GLuint location) {
+	glBindAttribLocation(this->program, location, name.c_str());
 }
 
 bool ShaderProgram::build() {
