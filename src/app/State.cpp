@@ -1,6 +1,6 @@
 #include "State.h"
 
-namespace game {
+namespace app {
 
 State* State::instance = 0;
 

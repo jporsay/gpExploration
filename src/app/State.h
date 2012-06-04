@@ -3,7 +3,7 @@
 
 #include <string>
 
-namespace game {
+namespace app {
 
 class State {
 private:

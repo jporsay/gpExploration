@@ -1,6 +1,6 @@
 #include "Settings.h"
 
-namespace game {
+namespace app {
 
 Settings* Settings::instance = 0;
 
