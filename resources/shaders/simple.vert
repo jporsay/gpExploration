@@ -1,7 +1,9 @@
 #version 330
 
 in vec3 vert;
+uniform mat4 vp;
 
 void main(void) {
-	gl_Position = vec4(vert, 1.0);
+	vec4 position = vp * vec4(vert, 1.0);
+	gl_Position = position;
 }
