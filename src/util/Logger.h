@@ -3,6 +3,7 @@
 
 #include <fstream>
 #include <map>
+#include <string>
 
 using namespace std;
 
@@ -21,18 +22,18 @@ private:
         Error
     };
     map<LogLevel, string> logLevelString;
-    void _log(LogLevel level, string text);
+    void _log(LogLevel level, string text, int line, char* fileName);
 public:
     ~Logger();
     static Logger* inst();
     void setFileName(string fileName);
-    void logError(string text);
-    void logWarning(string text);
-    void logInfo(string text);
+    void logError(string text, int line, char* fileName);
+    void logWarning(string text, int line, char* fileName);
+    void logInfo(string text, int line, char* fileName);
 };
 
-#define LOG_INFO(info) Logger::inst()->logInfo(info)
-#define LOG_WARNING(info) Logger::inst()->logWarning(info)
-#define LOG_ERROR(info) Logger::inst()->logError(info)
+#define LOG_INFO(info) Logger::inst()->logInfo((string)(info), __LINE__, __FILE__);
+#define LOG_WARNING(info) Logger::inst()->logWarning((string)(info), __LINE__, __FILE__);
+#define LOG_ERROR(info) Logger::inst()->logError((string)(info), __LINE__, __FILE__);
 
 #endif
