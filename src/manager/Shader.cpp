@@ -25,11 +25,14 @@ void Shader::setPath(std::string path) {
 }
 
 bool Shader::loadShaders() {
-	std::ifstream ifs(this->path.append("shaders").c_str());
+	std::string file(this->path + "shaders");
+	std::ifstream ifs(file.c_str());
 	std::string shader;
 
 	while (getline(ifs, shader)) {
-		if (!this->loadShader(this->path + shader)) {
+		if (!this->loadShader(shader)) {
+			ifs.close();
+			LOG_ERROR("Error loading shader: " + shader);
 			return false;
 		}
 	}
@@ -39,10 +42,32 @@ bool Shader::loadShaders() {
 
 bool Shader::loadShader(std::string shader) {
 	std::string vert, frag;
-	vert = utilities::readFile(shader + "." + this->vertexExtension);
-	frag = utilities::readFile(shader + "." + this->fragmentExtension);
-	// compile shaders and add them to map
+	vert = this->path + shader + "." + this->vertexExtension;
+	frag = this->path + shader + "." + this->fragmentExtension;
+	gl::ShaderProgram* program = new gl::ShaderProgram();
+	if (!program->addVertexShader(vert)) {
+		LOG_ERROR("Error adding vertex shader");
+		return false;
+	}
+	if (!program->addFragmentShader(frag)) {
+		LOG_ERROR("Error adding fragment shader");
+		return false;
+	}
+	this->programs.insert(std::pair<std::string, gl::ShaderProgram*>(shader, program));
 	return true;
+}
+
+bool Shader::compile(std::string shader) {
+	std::map<std::string, gl::ShaderProgram*>::iterator it = this->programs.find(shader);
+	if (it != this->programs.end()) {
+		return it->second->compile();
+	}
+	LOG_INFO("Shader not found");
+	return true;
+}
+
+gl::ShaderProgram* Shader::getProgram(std::string shader) {
+	return this->programs.find(shader)->second;
 }
 
 Shader::~Shader() {
