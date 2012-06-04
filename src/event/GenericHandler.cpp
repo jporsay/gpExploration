@@ -1,5 +1,5 @@
 #include "GenericHandler.h"
-#include "../game/State.h"
+#include "../app/State.h"
 namespace handler {
 
 GenericHandler::GenericHandler() {
@@ -10,14 +10,14 @@ GenericHandler::GenericHandler() {
 void GenericHandler::handleEvent(SDL_Event* event) {
 	switch (event->type) {
 		case SDL_QUIT:
-			game::State::inst()->setRunning(false);
+			app::State::inst()->setRunning(false);
 			break;
 		case SDL_VIDEORESIZE:
 			onWindowResize(event->resize);
 			break;
 		case SDL_ACTIVEEVENT: {
 			if ( event->active.state & SDL_APPACTIVE ) {
-				game::State::inst()->setHidden(!event->active.gain);
+				app::State::inst()->setHidden(!event->active.gain);
 			}
 		}
 		break;
