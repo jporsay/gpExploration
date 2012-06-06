@@ -18,7 +18,7 @@ public:
 	Camera(glm::vec3 position, glm::vec3 lookDirection);
 	Camera(glm::vec3 position, glm::vec3 lookDirection, glm::vec3 upDirection);
 	glm::mat4 worldToCamera();
-	glm::mat4 toScreen();
+	glm::mat4 cameraToScreen();
 	virtual ~Camera();
 };
 

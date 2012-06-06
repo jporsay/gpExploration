@@ -29,7 +29,7 @@ glm::mat4 Camera::worldToCamera() {
 	return glm::lookAt(this->position, this->lookAt, this->up);
 }
 
-glm::mat4 Camera::toScreen() {
+glm::mat4 Camera::cameraToScreen() {
 	return glm::perspective(45.0f, 1.0f*app::GraphicSettings::screenWidth/app::GraphicSettings::screenHeight, 0.1f, 100.0f);
 }
 
