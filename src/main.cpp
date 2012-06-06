@@ -31,10 +31,12 @@ bool initGlew() {
 	glew_init = glewInit();
 	if (glew_init != GLEW_OK) {
 		std::cout << "Error initializing GLEW" << std::endl;
+		LOG_ERROR("Error initializing GLEW");
 		return false;
 	}
 	if (!GLEW_VERSION_3_3) {
 		std::cout << "OpenGL 3.3 not supported" << std::endl;
+		LOG_ERROR("OpenGL 3.3 not supported");
 		return false;
 	}
 	return true;
