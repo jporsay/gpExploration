@@ -1,13 +1,13 @@
 #ifndef HANDLER_H_
 #define HANDLER_H_
 
-#include <SDL/SDL.h>
+#include <SFML/Window/Event.hpp>
 
 namespace handler {
 
 class Handler {
 public:
-	virtual void handleEvent(SDL_Event* event);
+	virtual void handleEvent(sf::Event* event);
 	virtual ~Handler();
 };
 

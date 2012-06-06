@@ -3,7 +3,7 @@
 namespace handler {
 
 Handler::~Handler() {};
-void Handler::handleEvent(SDL_Event* event) {};
+void Handler::handleEvent(sf::Event* event) {};
 
 }
 

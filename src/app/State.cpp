@@ -3,6 +3,7 @@
 namespace app {
 
 State* State::instance = 0;
+sf::RenderWindow* State::mainWindow = 0;
 
 State::State() {
 	this->running = false;

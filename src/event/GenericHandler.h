@@ -9,8 +9,8 @@ class GenericHandler: public handler::Handler {
 public:
 	GenericHandler();
 	virtual ~GenericHandler();
-	void handleEvent(SDL_Event* event);
-	void onWindowResize(SDL_ResizeEvent event);
+	void handleEvent(sf::Event* event);
+	void onWindowResize(sf::Event* event);
 };
 
 }

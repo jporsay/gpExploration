@@ -1,5 +1,5 @@
-#include <SDL/SDL.h>
 #include <GL/glew.h>
+#include <SFML/Graphics.hpp>
 #include <iostream>
 #include "util/Logger.h"
 #include "event/Manager.h"
@@ -10,14 +10,11 @@
 #include "manager/Shader.h"
 #include "manager/CameraManager.h"
 #include "gl/util/Helper.h"
-#include "glm/glm.hpp"
-#include "glm/gtc/type_ptr.hpp"
 
 #include "parser/ThreeDS.h"
 #include "model/Model.h"
 #include "world/Camera.h"
 
-SDL_Surface* screen;
 event::Manager* eventManager;
 manager::Camera* cameraManager;
 glm::mat4 vp;
@@ -25,17 +22,8 @@ bool running = true;
 
 model::Model* o;
 
-bool initSDL() {
-	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
-		std::cout << "Couldn't initialize SDL" << std::endl;
-		return false;
-	}
-	screen = SDL_SetVideoMode(app::GraphicSettings::screenWidth, app::GraphicSettings::screenHeight, 32, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_OPENGL);
-	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER,1);
-	if (screen == NULL) {
-		std::cout << "Error creating OpenGL Surface." << std::endl;
-		return false;
-	}
+bool initSFML() {
+	app::State::mainWindow = new sf::RenderWindow(sf::VideoMode(800, 600), "Graphics Programming Exploration!");
 	return true;
 }
 
@@ -61,17 +49,17 @@ bool initOpenGL() {
 }
 
 bool initEverything() {
-	app::GraphicSettings::screenHeight = 600;
-	app::GraphicSettings::screenWidth = 800;
-	if (!initSDL() || !initGlew() || !initOpenGL()) {
-		return false;
-	}
 	app::Settings::inst()->setResourcePath("resources/");
 	app::Settings::inst()->setShaderPath("resources/shaders/");
 	app::Settings::inst()->setModelPath("resources/models/");
 	Logger::inst()->setFileName("log.txt");
 	eventManager = new event::Manager();
 	eventManager->registerHandler(new handler::GenericHandler());
+	app::GraphicSettings::screenHeight = 600;
+	app::GraphicSettings::screenWidth = 800;
+	if (!initSFML() || !initGlew() || !initOpenGL()) {
+		return false;
+	}
 	cameraManager = manager::Camera::inst();
 	cameraManager->add(new world::Camera(), "world");
 	return true;
@@ -101,18 +89,16 @@ bool loadEverything() {
 
 void render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(0.827, 0.827, 0.827, 1.0);
+	glClearColor(0, 0, 0, 1.0);
 	o->draw();
-	SDL_GL_SwapBuffers();
+	app::State::mainWindow->display();
 }
 
 void run() {
 	app::State::inst()->setRunning(true);
-	while (app::State::inst()->isRunning()) {
-		if (!app::State::inst()->isHidden()) {
-			eventManager->handleEvents();
-			render();
-		}
+	while (app::State::mainWindow->isOpen()) {
+		eventManager->handleEvents();
+		render();
 	}
 }
 
@@ -124,10 +110,11 @@ int main(int argc, char* argv[]) {
 	if (!initEverything()) {
 		return 1;
 	}
-	LOG_INFO("Starting demo");
+	LOG_INFO("Loading resources...")
 	if (!loadEverything()) {
 		return 1;
 	}
+	LOG_INFO("Starting demoooo");
 	run();
 	clean();
 	return 0;

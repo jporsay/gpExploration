@@ -2,7 +2,7 @@
 #define STATE_H_
 
 #include <string>
-
+#include <SFML/Graphics.hpp>
 namespace app {
 
 class State {
@@ -14,6 +14,7 @@ private:
 	State();
 public:
 	static State* inst();
+	static sf::RenderWindow* mainWindow;
 	bool isRunning();
 	void setRunning(bool value);
 	bool isHidden();

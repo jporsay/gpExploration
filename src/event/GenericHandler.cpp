@@ -7,25 +7,22 @@ GenericHandler::GenericHandler() {
 
 }
 
-void GenericHandler::handleEvent(SDL_Event* event) {
+void GenericHandler::handleEvent(sf::Event* event) {
 	switch (event->type) {
-		case SDL_QUIT:
-			app::State::inst()->setRunning(false);
+		case sf::Event::Resized:
+			onWindowResize(event);
 			break;
-		case SDL_VIDEORESIZE:
-			onWindowResize(event->resize);
+		case sf::Event::Closed:
+			app::State::mainWindow->close();
 			break;
-		case SDL_ACTIVEEVENT: {
-			if ( event->active.state & SDL_APPACTIVE ) {
-				app::State::inst()->setHidden(!event->active.gain);
-			}
-		}
-		break;
+		default:
+			break;
+
 	}
 }
 
 
-void GenericHandler::onWindowResize(SDL_ResizeEvent event) {
+void GenericHandler::onWindowResize(sf::Event* event) {
 	//int newWidth = event.w;
 	//int newHeight = event.h;
 }

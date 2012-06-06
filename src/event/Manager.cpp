@@ -8,8 +8,8 @@ Manager::Manager() {
 
 void Manager::handleEvents() {
 	handler::Handler* h;
-	SDL_Event e;
-	while(SDL_PollEvent(&e)) {
+	sf::Event e;
+	while(app::State::mainWindow->pollEvent(e)) {
 		for (int i = 0; i < (int)this->handlers->size(); i++) {
 			h = this->handlers->at(i);
 			h->handleEvent(&e);

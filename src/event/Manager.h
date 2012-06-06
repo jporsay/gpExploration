@@ -2,7 +2,8 @@
 #define MANAGER_H_
 
 #include "Handler.h"
-#include <SDL/SDL_events.h>
+#include "../app/State.h"
+#include <SFML/Window/Event.hpp>
 #include <vector>
 
 namespace event {
