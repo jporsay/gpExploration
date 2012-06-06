@@ -42,9 +42,10 @@ bool initGlew() {
 }
 
 bool initOpenGL() {
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_BACK);
-	glFrontFace(GL_CCW);
+	glEnable(GL_DEPTH_TEST);
+//	glEnable(GL_CULL_FACE);
+//	glCullFace(GL_BACK);
+//	glFrontFace(GL_CCW);
 	return true;
 }
 
@@ -68,8 +69,6 @@ bool initEverything() {
 bool loadEverything() {
 	parser::ThreeDS* parser = new parser::ThreeDS();
 	parser->setFile("Cube.3ds");
-	o = parser->parse();
-	o->upload();
 	manager::Shader::inst()->setPath(app::Settings::inst()->getShaderPath());
 	if (!manager::Shader::inst()->loadShaders()) {
 		return false;
@@ -79,11 +78,9 @@ bool loadEverything() {
 	}
 	gl::ShaderProgram* simpleShader = manager::Shader::inst()->getProgram("simple");
 	simpleShader->bindAttribLocation("vert", gl::util::GL_ATTRIB_VERTEX);
-	GLuint uVp = glGetUniformLocation(simpleShader->get(), "vp");
-	glUseProgram(simpleShader->get());
-	vp = cameraManager->get("world")->toScreen() * cameraManager->get("world")->worldToCamera();
-	glUniformMatrix4fv(uVp, 1, GL_FALSE, glm::value_ptr(vp));
 	simpleShader->link();
+	o = parser->parse();
+	o->upload();
 	return true;
 }
 
