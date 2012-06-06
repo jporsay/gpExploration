@@ -84,16 +84,53 @@ bool loadEverything() {
 	o->upload();
 	return true;
 }
+/*
+static const GLfloat g_vertex_buffer_data[] = {
+   -1.0f, -1.0f, 0.0f,
+   1.0f, -1.0f, 0.0f,
+   0.0f,  1.0f, 0.0f,
+};
+GLuint vertexbuffer;
+void dummyInit() {
+	glGenBuffers(1, &vertexbuffer);
 
+	// The following commands will talk about our 'vertexbuffer' buffer
+	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+
+	// Give our vertices to OpenGL.
+	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+
+}
+
+void dummyRender() {
+	glEnableVertexAttribArray(gl::util::GL_ATTRIB_VERTEX);
+	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+	glVertexAttribPointer(
+	   gl::util::GL_ATTRIB_VERTEX,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
+	   3,                  // size
+	   GL_FLOAT,           // type
+	   GL_FALSE,           // normalized?
+	   0,                  // stride
+	   (void*)0            // array buffer offset
+	);
+
+	// Draw the triangle !
+	glDrawArrays(GL_TRIANGLES, 0, 3); // Starting from vertex 0; 3 vertices total -> 1 triangle
+
+	glDisableVertexAttribArray(gl::util::GL_ATTRIB_VERTEX);
+}
+*/
 void render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(0, 0, 0, 1.0);
 	o->draw();
+//	dummyRender();
 	app::State::mainWindow->display();
 }
 
 void run() {
 	app::State::inst()->setRunning(true);
+//	dummyInit();
 	while (app::State::mainWindow->isOpen()) {
 		eventManager->handleEvents();
 		render();
@@ -102,6 +139,11 @@ void run() {
 
 void clean() {
 
+}
+
+int newMain() {
+	run();
+	return 1;
 }
 
 int main(int argc, char* argv[]) {
