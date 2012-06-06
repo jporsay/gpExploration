@@ -17,7 +17,6 @@
 
 event::Manager* eventManager;
 manager::Camera* cameraManager;
-glm::mat4 vp;
 bool running = true;
 
 model::Model* o;
