@@ -1,11 +1,11 @@
 #include "Model.h"
 #include "../manager/Shader.h"
+#include "../manager/CameraManager.h"
 #include "../gl/ShaderProgram.h"
-
 namespace model {
 
 Model::Model() {
-	// TODO Auto-generated constructor stub
+	this->modelToWorld = glm::mat4(1.0);
 
 }
 
@@ -30,6 +30,9 @@ void Model::upload() {
 void Model::draw() {
 	gl::ShaderProgram* program = manager::Shader::inst()->getProgram("simple");
 	glUseProgram(program->get());
+	GLuint uMVP = glGetUniformLocation(program->get(), "mvp");
+	glm::mat4 mvp = manager::Camera::inst()->get("world")->cameraToScreen() * manager::Camera::inst()->get("world")->worldToCamera() * this->modelToWorld;
+	glUniformMatrix4fv(uMVP, 1, GL_FALSE, glm::value_ptr(mvp));
 	for (int i = 0; i < (int)this->meshes.size(); i++) {
 		this->meshes.at(i)->draw();
 	}
