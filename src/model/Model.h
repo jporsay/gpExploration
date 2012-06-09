@@ -20,6 +20,7 @@ public:
 	void addMesh(Mesh*);
 	void upload();
 	void draw();
+	unsigned int getVertexCount();
 	Model();
 	virtual ~Model();
 };

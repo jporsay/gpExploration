@@ -10,9 +10,9 @@ typedef struct {
 } vertex;
 
 typedef struct {
-	GLuint a;
-	GLuint b;
-	GLuint c;
+	GLushort a;
+	GLushort b;
+	GLushort c;
 } face;
 
 typedef struct {

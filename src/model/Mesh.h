@@ -27,6 +27,7 @@ public:
 	std::vector<mapCoord> getMapCoords();
 	void upload();
 	void draw();
+	unsigned int getVertexCount();
 	virtual ~Mesh();
 };
 

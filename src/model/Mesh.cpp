@@ -54,14 +54,19 @@ void Mesh::upload() {
 void Mesh::draw() {
 //	glBindVertexArray(this->vao);
 	if (this->ibo != 0) {
-		glEnableVertexAttribArray(gl::util::GL_ATTRIB_VERTEX);
 		glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
+		glEnableVertexAttribArray(gl::util::GL_ATTRIB_VERTEX);
 		glVertexAttribPointer(gl::util::GL_ATTRIB_VERTEX, 3, GL_FLOAT, GL_FALSE, 0, 0);
 		GLint size;
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->ibo);
 		glGetBufferParameteriv(GL_ELEMENT_ARRAY_BUFFER, GL_BUFFER_SIZE, &size);
-		glDrawElements(GL_TRIANGLES, size / sizeof(GLuint), GL_UNSIGNED_SHORT, 0);
+		LOG_INFO("Size: " + utilities::toString(size / sizeof(GLushort)));
+		glDrawElements(GL_TRIANGLES, size / sizeof(GLushort), GL_UNSIGNED_SHORT, 0);
 	}
+}
+
+unsigned int Mesh::getVertexCount() {
+	return this->vertexes.size();
 }
 
 Mesh::~Mesh() {
