@@ -76,7 +76,6 @@ void Mesh::upload() {
 			glGenTextures(1, &this->textureId);
 			const unsigned char *pixels = t->getPixelPtr();
 			glBindTexture(GL_TEXTURE_2D, this->textureId);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 			glTexImage2D(GL_TEXTURE_2D,
 					0,
 					GL_RGBA,
@@ -87,6 +86,8 @@ void Mesh::upload() {
 					GL_UNSIGNED_BYTE,
 					pixels
 			);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		}
 
 	}
@@ -97,14 +98,14 @@ void Mesh::draw(GLuint currProgram) {
 		glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
 		glEnableVertexAttribArray(gl::util::GL_ATTRIB_VERTEX);
 		glVertexAttribPointer(gl::util::GL_ATTRIB_VERTEX, 3, GL_FLOAT, GL_FALSE, 0, 0);
-		glBindBuffer(GL_ARRAY_BUFFER, this->texVbo);
-		if (this->textureId) {
-			glEnableVertexAttribArray(gl::util::GL_ATTRIB_TEXTURE);
-			glVertexAttribPointer(gl::util::GL_ATTRIB_TEXTURE, 2, GL_FLOAT, GL_FALSE, 0, 0);
+		if (this->texVbo) {
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D, this->textureId);
 			GLuint texUniform = glGetUniformLocation(currProgram, "tex_0");
 			glUniform1i(texUniform, 0);
+			glBindBuffer(GL_ARRAY_BUFFER, this->texVbo);
+			glEnableVertexAttribArray(gl::util::GL_ATTRIB_TEXTURE);
+			glVertexAttribPointer(gl::util::GL_ATTRIB_TEXTURE, 2, GL_FLOAT, GL_FALSE, 0, 0);
 		}
 		GLint size;
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->ibo);
