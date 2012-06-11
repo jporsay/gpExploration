@@ -68,8 +68,6 @@ bool initEverything() {
 }
 
 bool loadEverything() {
-	parser::ThreeDS* parser = new parser::ThreeDS();
-	parser->setFile("BoxTest.3ds");
 	manager::Shader::inst()->setPath(app::Settings::inst()->getShaderPath());
 	if (!manager::Shader::inst()->loadShaders()) {
 		return false;
@@ -80,8 +78,13 @@ bool loadEverything() {
 	gl::ShaderProgram* simpleShader = manager::Shader::inst()->getProgram("simple");
 	simpleShader->bindAttribLocation("vert", gl::util::GL_ATTRIB_VERTEX);
 	simpleShader->bindAttribLocation("texCoord", gl::util::GL_ATTRIB_TEXTURE);
+	parser::ThreeDS* parser = new parser::ThreeDS();
 	simpleShader->link();
+	parser->setFile("BoxTest.3ds");
 	o = parser->parse();
+	if (!o) {
+		return false;
+	}
 	o->upload();
 	return true;
 }
