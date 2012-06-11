@@ -1,5 +1,5 @@
-#ifndef SETTINGS_H_
-#define SETTINGS_H_
+#ifndef APP_SETTINGS_H
+#define APP_SETTINGS_H
 
 #include <string>
 
@@ -13,6 +13,7 @@ private:
 	std::string resources;
 	std::string shaders;
 	std::string models;
+	std::string textures;
 public:
 
 	void setResourcePath(std::string path);
@@ -21,6 +22,8 @@ public:
 	std::string getShaderPath();
 	void setModelPath(std::string path);
 	std::string getModelPath();
+	void setTexturePath(std::string path);
+	std::string getTexturePath();
 	static Settings* inst();
 	virtual ~Settings();
 

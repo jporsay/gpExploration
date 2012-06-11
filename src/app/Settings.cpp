@@ -40,6 +40,14 @@ std::string Settings::getModelPath() {
 	return this->models;
 }
 
+void Settings::setTexturePath(std::string path) {
+	this->textures = path;
+}
+
+std::string Settings::getTexturePath() {
+	return this->textures;
+}
+
 Settings::~Settings() {
 	// TODO Auto-generated destructor stub
 }
