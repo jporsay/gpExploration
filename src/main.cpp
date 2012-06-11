@@ -53,7 +53,7 @@ bool initEverything() {
 	app::Settings::inst()->setResourcePath("resources/");
 	app::Settings::inst()->setShaderPath("resources/shaders/");
 	app::Settings::inst()->setModelPath("resources/models/");
-	app::Settings::inst()->setModelPath("resources/textures/");
+	app::Settings::inst()->setTexturePath("resources/textures/");
 	Logger::inst()->setFileName("log.txt");
 	eventManager = new event::Manager();
 	eventManager->registerHandler(new handler::GenericHandler());
