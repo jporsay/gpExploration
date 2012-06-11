@@ -2,7 +2,7 @@
 
 namespace manager {
 
-Shader* Shader::instance = NULL;
+Shader* Shader::instance = 0;
 
 Shader::Shader() {
 	this->vertexExtension = "vert";
@@ -10,7 +10,7 @@ Shader::Shader() {
 }
 
 Shader* Shader::inst() {
-	if (Shader::instance == NULL) {
+	if (Shader::instance == 0) {
 		Shader::instance = new Shader();
 	}
 	return Shader::instance;
