@@ -1,11 +1,11 @@
 #include "Model.h"
-#include "../manager/Shader.h"
 #include "../manager/CameraManager.h"
 #include "../gl/ShaderProgram.h"
+
 namespace model {
 
 Model::Model() {
-	this->modelToWorld = glm::scale(glm::mat4(1.0f), glm::vec3(1));
+	this->modelToWorld = glm::scale(glm::mat4(1.0f), glm::vec3(0.2));
 
 }
 
@@ -15,6 +15,21 @@ void Model::setName(std::string name) {
 
 std::string Model::getName() {
 	return this->name;
+}
+
+void Model::addMaterial(material mat) {
+	this->materials.push_back(mat);
+	for (vector<Mesh*>::iterator it = this->meshes.begin(); it != this->meshes.end(); ++it) {
+		(*it)->addMaterial(&mat);
+	}
+}
+
+material Model::getMaterial(int i) {
+	return this->materials.at(i);
+}
+
+std::vector<material> Model::getMaterials() {
+	return this->materials;
 }
 
 void Model::addMesh(Mesh* mesh) {
