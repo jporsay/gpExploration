@@ -5,7 +5,7 @@
 namespace model {
 
 Model::Model() {
-	this->modelToWorld = glm::scale(glm::mat4(1.0), glm::vec3(0.2));
+	this->modelToWorld = glm::scale(glm::mat4(1.0f), glm::vec3(1));
 
 }
 
@@ -48,6 +48,7 @@ unsigned int Model::getVertexCount() {
 	for (int i = 0; i < (int)this->meshes.size(); i++) {
 		vertexCount += this->meshes.at(i)->getVertexCount();
 	}
+	return vertexCount;
 }
 
 Model::~Model() {
