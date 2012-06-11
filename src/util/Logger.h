@@ -32,8 +32,8 @@ public:
     void logInfo(string text, int line, char* fileName);
 };
 
-#define LOG_INFO(info) Logger::inst()->logInfo((string)(info), __LINE__, __FILE__);
-#define LOG_WARNING(info) Logger::inst()->logWarning((string)(info), __LINE__, __FILE__);
-#define LOG_ERROR(info) Logger::inst()->logError((string)(info), __LINE__, __FILE__);
+#define LOG_INFO(info) Logger::inst()->logInfo(info, __LINE__, __FILE__);
+#define LOG_WARNING(info) Logger::inst()->logWarning(info, __LINE__, __FILE__);
+#define LOG_ERROR(info) Logger::inst()->logError(info, __LINE__, __FILE__);
 
 #endif
