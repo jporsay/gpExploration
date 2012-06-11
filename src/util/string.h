@@ -6,6 +6,7 @@
 #include <fstream>
 #include <streambuf>
 #include <sstream>
+#include <algorithm>
 
 namespace utilities {
 
@@ -25,6 +26,11 @@ inline std::string toHexString(const T& t) {
 	return ss.str();
 }
 
+inline std::string toLower(const std::string text) {
+	std::string lText(text);
+	std::transform(lText.begin(), lText.end(), lText.begin(), ::tolower);
+	return lText;
+}
 
 }
 
