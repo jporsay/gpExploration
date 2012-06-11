@@ -60,7 +60,6 @@ void Mesh::draw() {
 		GLint size;
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->ibo);
 		glGetBufferParameteriv(GL_ELEMENT_ARRAY_BUFFER, GL_BUFFER_SIZE, &size);
-		LOG_INFO("Size: " + utilities::toString(size / sizeof(GLushort)));
 		glDrawElements(GL_TRIANGLES, size / sizeof(GLushort), GL_UNSIGNED_SHORT, 0);
 	}
 }
