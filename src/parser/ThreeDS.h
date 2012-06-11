@@ -1,5 +1,5 @@
-#ifndef THREEDS_H_
-#define THREEDS_H_
+#ifndef PARSER_THREEDS_H
+#define PARSER_THREEDS_H
 
 #include <fstream>
 #include <ios>

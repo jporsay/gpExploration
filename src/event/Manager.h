@@ -1,5 +1,5 @@
-#ifndef MANAGER_H_
-#define MANAGER_H_
+#ifndef EVENT_MANAGER_H
+#define EVENT_MANAGER_H
 
 #include "Handler.h"
 #include "../app/State.h"

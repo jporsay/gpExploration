@@ -1,5 +1,5 @@
-#ifndef STATE_H_
-#define STATE_H_
+#ifndef APP_STATE_H
+#define APP_STATE_H
 
 #include <string>
 #include <SFML/Graphics.hpp>

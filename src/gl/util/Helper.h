@@ -1,5 +1,5 @@
-#ifndef HELPER_H_
-#define HELPER_H_
+#ifndef GL_UTIL_HELPER_H
+#define GL_UTIL_HELPER_H
 
 #include <gl/glew.h>
 #include "../../util/string.h"

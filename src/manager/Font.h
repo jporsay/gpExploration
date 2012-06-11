@@ -1,5 +1,5 @@
-#ifndef FONT_H_
-#define FONT_H_
+#ifndef MANAGER_FONT_H
+#define MANAGER_FONT_H
 
 namespace manager {
 

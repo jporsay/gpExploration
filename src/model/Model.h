@@ -1,5 +1,5 @@
-#ifndef OBJECT_H_
-#define OBJECT_H_
+#ifndef MODEL_MODEL_H
+#define MODEL_MODEL_H
 
 #include <vector>
 #include <string>

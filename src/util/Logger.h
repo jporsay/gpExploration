@@ -1,5 +1,5 @@
-#ifndef LOGGER_H_
-#define LOGGER_H_
+#ifndef UTIL_LOGGER_H
+#define UTIL_LOGGER_H
 
 #include <fstream>
 #include <map>

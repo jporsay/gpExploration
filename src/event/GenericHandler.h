@@ -1,5 +1,5 @@
-#ifndef GENERICHANDLER_H_
-#define GENERICHANDLER_H_
+#ifndef EVENT_GENERICHANDLER_H
+#define EVENT_GENERICHANDLER_H
 
 #include "Handler.h"
 

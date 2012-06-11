@@ -1,5 +1,5 @@
-#ifndef HANDLER_H_
-#define HANDLER_H_
+#ifndef EVENT_HANDLER_H
+#define EVENT_HANDLER_H
 
 #include <SFML/Window/Event.hpp>
 

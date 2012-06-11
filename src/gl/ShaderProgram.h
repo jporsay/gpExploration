@@ -1,5 +1,5 @@
-#ifndef SHADERPROGRAM_H_
-#define SHADERPROGRAM_H_
+#ifndef GL_SHADERPROGRAM_H
+#define GL_SHADERPROGRAM_H
 
 #include <map>
 #include <string>

@@ -1,5 +1,5 @@
-#ifndef SHADER_H_
-#define SHADER_H_
+#ifndef GL_UTIL_SHADER_H
+#define GL_UTIL_SHADER_H
 
 #include <gl/glew.h>
 #include "../../util/string.h"

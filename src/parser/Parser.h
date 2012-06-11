@@ -1,5 +1,5 @@
-#ifndef PARSER_H_
-#define PARSER_H_
+#ifndef PARSER_PARSER_H
+#define PARSER_PARSER_H
 
 #include <string>
 #include "../model/Model.h"

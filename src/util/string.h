@@ -1,6 +1,6 @@
 
-#ifndef STRING_H_
-#define STRING_H_
+#ifndef UTIL_STRING_H
+#define UTIL_STRING_H
 
 #include <string>
 #include <fstream>

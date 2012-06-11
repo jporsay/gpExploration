@@ -1,5 +1,5 @@
-#ifndef CAMERAMANAGER_H_
-#define CAMERAMANAGER_H_
+#ifndef MANAGER_CAMERAMANAGER_H
+#define MANAGER_CAMERAMANAGER_H
 
 #include <string>
 #include <map>

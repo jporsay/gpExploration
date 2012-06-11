@@ -1,5 +1,5 @@
-#ifndef MESHSTRUCTS_H_
-#define MESHSTRUCTS_H_
+#ifndef MODEL_MESHSTRUCTS_H
+#define MODEL_MESHSTRUCTS_H
 
 #include <GL/glew.h>
 #include <string>

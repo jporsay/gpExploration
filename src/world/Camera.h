@@ -1,5 +1,5 @@
-#ifndef CAMERA_H_
-#define CAMERA_H_
+#ifndef WORLD_CAMERA_H
+#define WORLD_CAMERA_H
 
 #include "../glm/glm.hpp"
 #include "../glm/gtc/type_ptr.hpp"
