@@ -92,7 +92,7 @@ void Mesh::upload() {
 	}
 }
 
-void Mesh::draw() {
+void Mesh::draw(GLuint currProgram) {
 	if (this->ibo != 0) {
 		glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
 		glEnableVertexAttribArray(gl::util::GL_ATTRIB_VERTEX);
@@ -103,8 +103,7 @@ void Mesh::draw() {
 			glVertexAttribPointer(gl::util::GL_ATTRIB_TEXTURE, 2, GL_FLOAT, GL_FALSE, 0, 0);
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D, this->textureId);
-			gl::ShaderProgram* program = manager::Shader::inst()->getProgram("simple");
-			GLuint texUniform = glGetUniformLocation(program->get(), "tex_0");
+			GLuint texUniform = glGetUniformLocation(currProgram, "tex_0");
 			glUniform1i(texUniform, 0);
 		}
 		GLint size;

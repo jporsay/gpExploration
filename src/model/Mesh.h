@@ -5,10 +5,7 @@
 #include <string>
 #include <GL/glew.h>
 #include "MeshStructs.h"
-#include "../gl/ShaderProgram.h"
 #include "../manager/Texture.h"
-#include "../manager/Shader.h"
-#include "Texture.h"
 
 namespace model {
 
@@ -41,7 +38,7 @@ public:
 	std::vector<face> getFaces();
 	std::vector<texCoord> getTexCoords();
 	void upload();
-	void draw();
+	void draw(GLuint currProgram);
 	unsigned int getVertexCount();
 	virtual ~Mesh();
 };

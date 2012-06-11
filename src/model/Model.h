@@ -1,11 +1,13 @@
 #ifndef MODEL_MODEL_H
 #define MODEL_MODEL_H
 
+#include "Mesh.h"
 #include <vector>
 #include <string>
 #include "../glm/glm.hpp"
 #include "../glm/gtc/type_ptr.hpp"
-#include "Mesh.h"
+#include "../manager/CameraManager.h"
+#include "../gl/ShaderProgram.h"
 
 namespace model {
 class Mesh;

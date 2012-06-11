@@ -1,7 +1,5 @@
 #include "Model.h"
-#include "../manager/CameraManager.h"
-#include "../gl/ShaderProgram.h"
-
+#include "../manager/Shader.h"
 namespace model {
 
 Model::Model() {
@@ -54,7 +52,7 @@ void Model::draw() {
 	glUniformMatrix4fv(view, 1, GL_FALSE, glm::value_ptr(manager::Camera::inst()->get("world")->worldToCamera()));
 	glUniformMatrix4fv(projection, 1, GL_FALSE, glm::value_ptr(manager::Camera::inst()->get("world")->cameraToScreen()));
 	for (int i = 0; i < (int)this->meshes.size(); i++) {
-		this->meshes.at(i)->draw();
+		this->meshes.at(i)->draw(program->get());
 	}
 }
 
