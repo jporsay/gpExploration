@@ -1,5 +1,5 @@
 #include "ThreeDS.h"
-
+#include "../model/MeshStructs.h"
 namespace parser {
 
 ThreeDS::ThreeDS() {
@@ -8,93 +8,61 @@ ThreeDS::ThreeDS() {
 }
 
 model::Model* ThreeDS::parse() {
-	unsigned short chunkId;
-	unsigned int chunkLength;
-	model::Model* obj = 0;
-	model::Mesh* mesh = 0;
-	std::ifstream file (this->file.c_str(), std::ios::in | std::ios::binary);
+	model::Model* obj;
+	this->model = lib3ds_file_open(this->file.c_str());
+	if (!this->model) {
+		LOG_ERROR("Error parsing model!");
+		return 0;
+	}
+	obj = new model::Model();
+	for (int i = 0; i < this->model->nmeshes; ++i) {
+		obj->addMesh(this->processMesh(this->model->meshes[i]));
+	}
+	for (int i = 0; i < this->model->nmaterials; ++i) {
+		obj->addMaterial(this->processMaterial(this->model->materials[i]));
+	}
+	return obj;
+}
 
-	while (file.good()) {
-		file.read((char*)&chunkId, sizeof(unsigned short));
-		file.read((char*)&chunkLength, sizeof(unsigned int));
-		switch (chunkId) {
-		case MAIN3DS:
-			break;
-		case EDITOR3DS:
-			break;
-		case EDIT_OBJECT:
-			obj = new model::Model();
-			this->readName(&file, obj);
-			break;
-		case OBJECT_TRIMESH:
-			mesh = new model::Mesh();
-			obj->addMesh(mesh);
-			break;
-		case TRI_VERTEXL:
-			this->readVertexes(&file, mesh);
-			break;
-		case TRI_FACEL1:
-			this->readFaces(&file, mesh);
-			break;
-		case TRI_MAPPINGCOORS:
-			this->readMappingCoordinates(&file, mesh);
-			break;
-		default:
-			file.seekg(chunkLength - 6, std::ios_base::cur);
-			break;
+material ThreeDS::processMaterial(Lib3dsMaterial* mat) {
+	material m;
+	vec3d a = { mat->ambient[0], mat->ambient[1], mat->ambient[2] },
+		d = { mat->diffuse[0], mat->diffuse[1], mat->diffuse[2] },
+		s = { mat->specular[0], mat->specular[1], mat->specular[2] };
+	m.ambient = a;
+	m.diffuse = d;
+	m.specular = s;
+	m.self_illum_flag = mat->self_illum_flag == 1;
+	m.self_illum = mat->self_illum;
+	m.shininess = mat->shininess;
+	m.shininess_strength = mat->shin_strength;
+	m.textureFile = mat->texture1_map.name;
+	return m;
+}
+
+model::Mesh* ThreeDS::processMesh(Lib3dsMesh* mesh) {
+	model::Mesh* out = new model::Mesh();
+	out->setName(mesh->name);
+//	float normals[mesh->nvertices][3];
+//	lib3ds_mesh_calculate_vertex_normals(mesh, normals);
+	LOG_INFO("Mesh with " + utilities::toString(mesh->nvertices) + " vertexes");
+	for (int i = 0; i < mesh->nvertices; ++i) {
+		LOG_INFO("Adding vertex");
+		out->addVertex(mesh->vertices[i][0], mesh->vertices[i][1], mesh->vertices[i][2]);
+		LOG_INFO("Added vertex");
+//		out->addNormal(normals[i][0], normals[i][1], normals[i][2]);
+		if (mesh->texcos) {
+			out->addTexCoord(mesh->texcos[i][0], mesh->texcos[i][1]);
 		}
 	}
-	file.close();
-	return obj;
+	for (int j = 0; j < mesh->nfaces; ++j) {
+		out->addFace(mesh->faces[j].index[0], mesh->faces[j].index[1], mesh->faces[j].index[2], mesh->faces[j].material);
+	}
+	return out;
 }
 
 ThreeDS::~ThreeDS() {
 	// TODO Auto-generated destructor stub
-}
-
-void ThreeDS::readName(std::ifstream* stream, model::Model* obj) {
-	char name[MAX_NAME_LENGTH];
-	char* curChar = name;
-	int i = 0;
-	do {
-		stream->read(curChar, 1);
-		i++;
-	} while (*(curChar++) != '\0' && i < MAX_NAME_LENGTH);
-	obj->setName(std::string(name));
-	return;
-}
-
-void ThreeDS::readVertexes(std::ifstream* stream, model::Mesh* mesh) {
-	unsigned short amount;
-	stream->read((char*)&amount, sizeof(unsigned short));
-	float vertex[3];
-	for (int i = 0; i < amount; i++) {
-		stream->read((char*)vertex, sizeof(float) * 3);
-		mesh->addVertex(vertex[0], vertex[1], vertex[2]);
-	}
-	return;
-}
-
-void ThreeDS::readFaces(std::ifstream* stream, model::Mesh* mesh) {
-	unsigned short amount;
-	unsigned short face_flags; // Unused but necessarily parsed
-	stream->read((char*)&amount, sizeof(unsigned short));
-	unsigned short face[3];
-	for (int i = 0; i < amount; i++) {
-		stream->read((char*)face, sizeof(unsigned short) * 3);
-		stream->read((char*)&face_flags, sizeof(unsigned short));
-		mesh->addFace(face[0], face[1], face[2]);
-	}
-	return;
-}
-
-void ThreeDS::readMappingCoordinates(std::ifstream* stream, model::Mesh* mesh) {
-	unsigned short amount;
-	stream->read((char*)&amount, sizeof(unsigned short));
-	float mapCoordinate[2];
-	stream->read((char*)mapCoordinate, sizeof(float) * 2);
-	mesh->addMapCoord(mapCoordinate[0], mapCoordinate[1]);
-	return;
 }
 
 }
