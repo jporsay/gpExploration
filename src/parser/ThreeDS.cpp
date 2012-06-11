@@ -47,9 +47,7 @@ model::Mesh* ThreeDS::processMesh(Lib3dsMesh* mesh) {
 //	lib3ds_mesh_calculate_vertex_normals(mesh, normals);
 	LOG_INFO("Mesh with " + utilities::toString(mesh->nvertices) + " vertexes");
 	for (int i = 0; i < mesh->nvertices; ++i) {
-		LOG_INFO("Adding vertex");
 		out->addVertex(mesh->vertices[i][0], mesh->vertices[i][1], mesh->vertices[i][2]);
-		LOG_INFO("Added vertex");
 //		out->addNormal(normals[i][0], normals[i][1], normals[i][2]);
 		if (mesh->texcos) {
 			out->addTexCoord(mesh->texcos[i][0], mesh->texcos[i][1]);
