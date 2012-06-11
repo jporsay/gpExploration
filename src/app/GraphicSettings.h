@@ -1,5 +1,5 @@
-#ifndef GRAPHICSETTINGS_H_
-#define GRAPHICSETTINGS_H_
+#ifndef APP_GRAPHICSETTINGS_H
+#define APP_GRAPHICSETTINGS_H
 
 namespace app {
 
