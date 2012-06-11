@@ -3,6 +3,8 @@
 
 namespace manager {
 
+Texture* Texture::instance = 0;
+
 Texture::Texture() {
 }
 
