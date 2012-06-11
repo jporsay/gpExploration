@@ -45,7 +45,6 @@ model::Mesh* ThreeDS::processMesh(Lib3dsMesh* mesh) {
 	out->setName(mesh->name);
 //	float normals[mesh->nvertices][3];
 //	lib3ds_mesh_calculate_vertex_normals(mesh, normals);
-	LOG_INFO("Mesh with " + utilities::toString(mesh->nvertices) + " vertexes");
 	for (int i = 0; i < mesh->nvertices; ++i) {
 		out->addVertex(mesh->vertices[i][0], mesh->vertices[i][1], mesh->vertices[i][2]);
 //		out->addNormal(normals[i][0], normals[i][1], normals[i][2]);
