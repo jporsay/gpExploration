@@ -42,7 +42,7 @@ void Model::upload() {
 }
 
 void Model::draw() {
-	this->modelToWorld = glm::rotate(this->modelToWorld, 0.033f, glm::vec3(1, 1, 0));
+	//this->modelToWorld = glm::rotate(this->modelToWorld, 0.033f, glm::vec3(1, 1, 0));
 	gl::ShaderProgram* program = manager::Shader::inst()->getProgram("simple");
 	glUseProgram(program->get());
 	GLuint model, view, projection;
