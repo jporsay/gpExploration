@@ -70,6 +70,7 @@ void Mesh::upload() {
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, this->faces.size() * sizeof(face), this->faces.data(), GL_STATIC_DRAW);
 	}
 	if (this->materials.size() > 0) {
+		// FIXME: hack since this shouldn't be always material 0.
 		material* m = this->materials.at(0);
 		Texture* t = manager::Texture::inst()->get(m->textureFile);
 		if (t) {
@@ -110,9 +111,9 @@ void Mesh::draw(GLuint currProgram) {
 			glVertexAttribPointer(gl::util::GL_ATTRIB_TEXTURE, 2, GL_FLOAT, GL_FALSE, 0, 0);
 		}
 		if (this->materials.size() > 0) {
+			// FIXME: hack since this shouldn't be always material 0.
 			material* m = this->materials.at(0);
 			m_diffuseUniform = glGetUniformLocation(currProgram, "materialProperties.diffuseColor");
-//			LOG_INFO(utilities::toString(m->diffuse.x) + " " + utilities::toString(m->diffuse.y) + " " + utilities::toString(m->diffuse.z));
 			glUniform3f(m_diffuseUniform, m->diffuse.x, m->diffuse.y, m->diffuse.z);
 		}
 		GLint size;
