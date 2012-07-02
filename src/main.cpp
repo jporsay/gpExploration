@@ -80,7 +80,7 @@ bool loadEverything() {
 	simpleShader->bindAttribLocation("texCoord", gl::util::GL_ATTRIB_TEXTURE);
 	parser::ThreeDS* parser = new parser::ThreeDS();
 	simpleShader->link();
-	parser->setFile("BoxTest.3ds");
+	parser->setFile("multiObjBody.3ds");
 	o = parser->parse();
 	if (!o) {
 		return false;
