@@ -3,7 +3,8 @@
 namespace model {
 
 Model::Model() {
-	this->modelToWorld = glm::scale(glm::mat4(1.0f), glm::vec3(0.2));
+	this->modelToWorld = glm::scale(glm::mat4(1.0f), glm::vec3(0.01));
+	this->modelToWorld = glm::rotate(this->modelToWorld, -90.0f, glm::vec3(1, 0, 0));
 
 }
 
